@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/IDN.Core/IDN.Core.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/">
+    <Project Path="src/Services/IDNDev.Cadastro.Api/IDNDev.Cadastro.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Web/" />
+</Solution>
