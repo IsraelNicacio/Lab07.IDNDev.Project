@@ -2,6 +2,8 @@ name: Build Lab07_Project
 on:
     push:
         branches: [main]
+        tags:
+            - "v*.*.*"
     pull_request:
         branches: [main]
     workflow_dispatch:
