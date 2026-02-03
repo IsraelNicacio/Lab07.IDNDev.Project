@@ -1,0 +1,24 @@
+name: Build Lab07_Project
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v6
+
+            - name: Setup .Net Core SDK
+              uses: actions/setup-dotnet@v5
+              with:
+                dotnet-version: '10.x'
+
+            - name: Build Solution
+              run: |
+                dotnet restore ./Lab07.IDNDev.Project.slnx
+                dotnet build --no-restore ./Lab07.IDNDev.Project.slnx
