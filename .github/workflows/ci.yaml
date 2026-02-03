@@ -6,6 +6,10 @@ on:
         branches: [main]
     workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }} # Agrupa execuções pela branch
+  cancel-in-progress: true # Cancela execuções anteriores em andamento
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -18,12 +22,13 @@ jobs:
               with:
                 dotnet-version: '10.x'
 
-            - name: Build Solution
+            - name: Build Solution & Test
               run: |
                 dotnet restore ./Lab07.IDNDev.Project.slnx
-                dotnet build --no-restore ./Lab07.IDNDev.Project.slnx --no-restore --no-build --logger trx --results-directory "TestResults"
+                dotnet build --no-restore ./Lab07.IDNDev.Project.slnx
+                dotnet test ./Lab07.IDNDev.Project.slnx --no-restore --no-build --logger trx --results-directory "TestResults"
 
-            - name: Build & Test
+            - name: Upload Articts
               uses: actions/upload-artifact@v6
               with:
                 name: dotnet-test-results

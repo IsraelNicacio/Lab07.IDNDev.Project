@@ -6,6 +6,9 @@
   <Folder Name="/src/Services/">
     <Project Path="src/Services/IDNDev.Cadastro.Api/IDNDev.Cadastro.Api.csproj" />
   </Folder>
+  <Folder Name="/src/Test/">
+    <Project Path="src/Test/IDNDev.Cadastro.Test/IDNDev.Cadastro.Test.csproj" Id="b1304710-170d-4e70-b51d-ee3b06025565" />
+  </Folder>
   <Folder Name="/src/Web/" />
   <Project Path="docker-compose.dcproj">
     <Build />

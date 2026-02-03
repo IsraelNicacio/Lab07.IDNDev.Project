@@ -25,7 +25,7 @@ public class Pessoa : EntityBase
     {
         var assert = new ValidationEntity()
             .NotNullOrEmpty(Nome, "O campo Nome deve ser informado")
-            .HasMaxLen(Nome, 3, "O campo Nome deve ter o tamanho minimo de 3 caracteres")
+            .HasMinLen(Nome, 3, "O campo Nome deve ter o tamanho minimo de 3 caracteres")
             .HasMaxLen(Nome, 60, "O campo Nome deve ter o tamanho maximo de 60 caracteres")
             .NotNullOrEmpty(Documento, "O campo Documento deve ser informado")
             .HasMaxLen(Nome, 60, "O campo Nome deve ter o tamanho maximo de 14 caracteres")
