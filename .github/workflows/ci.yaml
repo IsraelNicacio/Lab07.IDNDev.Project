@@ -30,7 +30,7 @@ jobs:
               run: dotnet build --no-restore --configuration Release ./Lab07.IDNDev.Project.slnx
 
             - name: Test
-              run: dotnet test ./src/Test/IDNDev.Cadastro.Test/IDNDev.Cadastro.Test.csproj --no-restore --no-build --logger trx --results-directory "TestResults"
+              run: dotnet test ./Lab07.IDNDev.Project.slnx --no-restore --no-build --logger trx --results-directory "TestResults"
 
             - name: Upload Articts
               uses: actions/upload-artifact@v6
