@@ -18,6 +18,7 @@ env:
 jobs:
     build:
         runs-on: ubuntu-latest
+
         steps:
             - name: checkout code
               uses: actions/checkout@v6
@@ -27,14 +28,19 @@ jobs:
               with:
                 dotnet-version: '10.x'
 
-            - name: Restore Packages
+            - name: Restore
               run: dotnet restore ./Lab07.IDNDev.Project.slnx
 
             - name: Build Solution
               run: dotnet build ./Lab07.IDNDev.Project.slnx -c Release --no-restore
 
             - name: Test
-              run: dotnet test ./Lab07.IDNDev.Project.slnx -c Release --no-build --no-restore --logger trx --results-directory "TestResults"
+              run: dotnet test ./Lab07.IDNDev.Project.slnx \
+                -c Release 
+                --no-build \
+                --no-restore \
+                --logger trx \
+                --results-directory "TestResults"
 
             - name: Upload Test Results
               uses: actions/upload-artifact@v6
@@ -42,19 +48,11 @@ jobs:
                 name: dotnet-test-results
                 path: TestResults
 
-            - name: Publish
-              run: dotnet publish ./src/Services/IDNDev.Cadastro.Api/IDNDev.Cadastro.Api.csproj --no-restore -c Release -o ./publish
-            
-            - name: Upload Artifacts Publish
-              uses: actions/upload-artifact@v6
-              with:
-                name: api
-                path: ./publish
-
     docker:
         needs: build
         name: Build and Push Docker Image
         runs-on: ubuntu-latest
+
         steps:
           - name: Checkout Code
             uses: actions/checkout@v6
@@ -62,8 +60,11 @@ jobs:
           - name: Set up Docker Buildx
             uses: docker/setup-buildx-action@v3
 
-          #- name: Build Docker Image
-            #run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/idndev-cadastro-api .
+          - name: Login to Docker Hub
+            uses: docker/login-action@v3
+            with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
 
           - name: Extract metadata (tags, labels)
             id: meta
@@ -73,16 +74,10 @@ jobs:
                     ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}
                 tags: |
                     type=sha
-                    type=raw,value=pattern={{version}}
-                    type=semver,pattern=enable={{is_default_branch}}
+                    type=semver,pattern={{version}}
+                    type=raw,value=latest,enable={{is_default_branch}}
 
-          - name: Login to Docker Hub
-            uses: docker/login-action@v3
-            with:
-                username: ${{ secrets.DOCKERHUB_USERNAME }}
-                password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-          - name: Build and push
+          - name: Build and push Docker Image
             uses: docker/build-push-action@v5
             with:
                 context: .
@@ -90,6 +85,3 @@ jobs:
                 push: true
                 tags: ${{ steps.meta.outputs.tags }}
                 labels: ${{ steps.meta.outputs.labels }}
-
-          #- name: Push Docker Image # Envia a imagem para o Docker Hub.
-            #run: docker push --all-tags ${{ secrets.DOCKERHUB_USERNAME }}/idndev-cadastro-api
