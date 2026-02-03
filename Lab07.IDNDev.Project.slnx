@@ -7,4 +7,7 @@
     <Project Path="src/Services/IDNDev.Cadastro.Api/IDNDev.Cadastro.Api.csproj" />
   </Folder>
   <Folder Name="/src/Web/" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>
