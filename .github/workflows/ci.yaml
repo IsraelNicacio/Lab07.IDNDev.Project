@@ -23,10 +23,9 @@ jobs:
                 dotnet-version: '10.x'
 
             - name: Restore Packages
-              run: |
-                dotnet restore ./Lab07.IDNDev.Project.slnx
+              run: dotnet restore ./Lab07.IDNDev.Project.slnx
 
-            - name: Build Solution for Publish
+            - name: Build Solution
               run: dotnet build --no-restore ./Lab07.IDNDev.Project.slnx
 
             - name: Test
