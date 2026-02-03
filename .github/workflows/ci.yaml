@@ -21,4 +21,10 @@ jobs:
             - name: Build Solution
               run: |
                 dotnet restore ./Lab07.IDNDev.Project.slnx
-                dotnet build --no-restore ./Lab07.IDNDev.Project.slnx
+                dotnet build --no-restore ./Lab07.IDNDev.Project.slnx --no-restore --no-build --logger trx --results-directory "TestResults"
+
+            - name: Build & Test
+              uses: actions/upload-artifact@v6
+              with:
+                name: dotnet-test-results
+                path: TestResults
