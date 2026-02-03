@@ -27,7 +27,7 @@ jobs:
                 dotnet restore ./Lab07.IDNDev.Project.slnx
 
             - name: Build Solution
-              run: dotnet build --no-restore --configuration Release ./Lab07.IDNDev.Project.slnx
+              run: dotnet build --no-restore ./Lab07.IDNDev.Project.slnx
 
             - name: Test
               run: dotnet test ./Lab07.IDNDev.Project.slnx --no-restore --no-build --logger trx --results-directory "TestResults"
