@@ -26,8 +26,8 @@ jobs:
               run: |
                 dotnet restore ./Lab07.IDNDev.Project.slnx
 
-            - name: Build Solution
-              run: dotnet build --no-restore ./Lab07.IDNDev.Project.slnx
+            - name: Build Solution for Publish
+              run: dotnet build --no-restore ./Lab07.IDNDev.Project.slnx -c Release
 
             - name: Test
               run: dotnet test ./Lab07.IDNDev.Project.slnx --no-restore --no-build --logger trx --results-directory "TestResults"
@@ -39,7 +39,7 @@ jobs:
                 path: TestResults
 
             - name: Publish
-              run: dotnet publish ./src/Services/IDNDev.Cadastro.Api/IDNDev.Cadastro.Api.csproj --no-restore --no-build --configuration Release --output ./publish
+              run: dotnet publish ./src/Services/IDNDev.Cadastro.Api/IDNDev.Cadastro.Api.csproj --no-restore --no-build -c Release -o ./publish
             
             - name: Upload Artifacts Publish
               uses: actions/upload-artifact@v6
