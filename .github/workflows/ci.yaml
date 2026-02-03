@@ -35,7 +35,7 @@ jobs:
               run: dotnet build ./Lab07.IDNDev.Project.slnx -c Release --no-restore
 
             - name: Test
-              run: dotnet test ./Lab07.IDNDev.Project.slnx \
+              run: dotnet test ./src/Services/IDNDev.Cadastro.Api/IDNDev.Cadastro.Api.csproj \
                 -c Release 
                 --no-build \
                 --no-restore \
