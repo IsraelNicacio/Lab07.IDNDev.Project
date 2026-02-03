@@ -22,14 +22,28 @@ jobs:
               with:
                 dotnet-version: '10.x'
 
-            - name: Build Solution & Test
+            - name: Restore Packages
               run: |
                 dotnet restore ./Lab07.IDNDev.Project.slnx
-                dotnet build --no-restore ./Lab07.IDNDev.Project.slnx
-                dotnet test ./Lab07.IDNDev.Project.slnx --no-restore --no-build --logger trx --results-directory "TestResults"
+
+            - name: Build Solution
+              run: dotnet build --no-restore ./Lab07.IDNDev.Project.slnx
+
+            - name: Test
+              run: dotnet test ./Lab07.IDNDev.Project.slnx --no-restore --no-build --logger trx --results-directory "TestResults"
 
             - name: Upload Articts
               uses: actions/upload-artifact@v6
               with:
                 name: dotnet-test-results
                 path: TestResults
+
+            - name: Publish
+              run: dotnet publish ./Lab07.IDNDev.Project.slnx --no-restore --no-build --configuration Release --output ./publish
+            
+            - name: Upload Artifacts Publish
+              uses: actions/upload-artifact@v6
+              with:
+                name: api
+                path: ./publish
+
